@@ -1,0 +1,9 @@
+Django>=3.0,<=3.1
+whitenoise
+psycopg2-binary
+Pillow
+mysqlclient
+django-crispy-forms
+django-markdownx
+django-allauth
+azure-storage-blob
