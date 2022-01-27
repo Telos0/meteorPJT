@@ -26,7 +26,7 @@ SECRET_KEY = 'u&d7p%8^s&wox=k!bs=27txq3@kq9n%*z!3$c$(-b32f#k2)w)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.56.101', 'localhost', '127.0.0.1', 'devmeteorwebapp.azurewebsites.net']
 
 
 # Application definition
