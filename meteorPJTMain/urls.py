@@ -19,5 +19,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('meteorvendor/', include('meteorvendor.urls')),
+    path('meteorexchange/', include('meteorexchange.urls')),
+    path('meteorwallet/', include('meteorwallet.urls')),
+    path('meteormetabus/', include('meteormetabus.urls')),
     path('', include('single_pages.urls')),
 ]

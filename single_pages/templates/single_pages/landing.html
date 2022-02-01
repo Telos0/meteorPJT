@@ -1,11 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Meteor Landing Zone</title>
-</head>
-<body>
-    <h3>Meteor Landing Zone</h3>
-    <p>메테오 프로젝트 시작합니다.</p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block head_title %}
+   Meteor Landing Zone
+{% endblock %}
+
+{% block main_area %}
+    <section>
+        <div class="container">
+            <div class="row justify-content-between">
+
+                <div class="col-lg-6">
+                    <br>
+                    <br>
+
+                    <h3>Meteor Landing Zone</h3>
+                    <hr>
+                    <p>메테오 프로젝트 시작합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

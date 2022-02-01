@@ -41,6 +41,9 @@ INSTALLED_APPS = [
 
     'single_pages',
     'meteorvendor',
+    'meteorwallet',
+    'meteorexchange',
+    'meteormetabus',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +62,7 @@ ROOT_URLCONF = 'meteorPJTMain.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
