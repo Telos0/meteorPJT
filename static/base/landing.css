@@ -1,9 +1,9 @@
 body {
     background: url('https://blobstorageforpydev.blob.core.windows.net/devmeteor/meteorMainborder.png') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
     background-size: contain;
-    -o-background-size: cover;
+    -o-background-size: contain;
 }
 
 section {
