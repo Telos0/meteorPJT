@@ -1,0 +1,23 @@
+{% extends 'meteorvendor/base_vendor_pages.html' %}
+
+{% block head_title %}
+   ProductList
+{% endblock %}
+
+{% block main_area %}
+    {% for p in product_list %}
+    <div class="card mb-4">
+       <img class="card-img-top" src="{{ p.productimageurl }}" alt="...">
+        <div class="card-body">
+
+            <h2 class="card-title">{{ p.productnickname }}</h2>
+
+        </div>
+        <div class="card-footer text-muted">
+            Posted {{ p.insdttm }} by
+            <a href="#">{{ p.vendor | upper }}</a>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}
