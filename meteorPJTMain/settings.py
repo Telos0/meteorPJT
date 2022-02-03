@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'meteorvendor',
     'meteorwallet',
     'meteorexchange',
-    'meteormetabus',
+    'meteormetaverse',
 ]
 
 MIDDLEWARE = [
