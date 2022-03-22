@@ -7,3 +7,4 @@ django-crispy-forms
 django-markdownx
 django-allauth
 azure-storage-blob
+web3
