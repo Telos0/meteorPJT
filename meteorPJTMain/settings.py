@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
+    'crispy_forms',
+
+
     'single_pages',
     'meteorvendor',
     'meteorwallet',
@@ -135,3 +139,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

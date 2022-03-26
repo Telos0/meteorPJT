@@ -1,0 +1,42 @@
+{% extends 'meteorvendor/base_vendor_pages.html' %}
+
+{% block head_title %}
+   OwnerProductList
+{% endblock %}
+
+{% block main_area %}
+    <div class="row">
+    {% for p in ownerproduct_list %}
+        {% if forloop.counter|divisibleby:3 %}
+            </div>
+        {% endif %}
+        {% if forloop.counter|divisibleby:3 %}
+            <div class="row">
+        {% endif %}
+        <div class="col-lg-3">
+            <div class="card mb-4">
+               <img class="card-img-top" src="{{ p.productid.productimageurl }}" alt="...">
+                <div class="card-body">
+
+                    <h2 class="card-title">{{ p.productid.productnickname }}</h2>
+                    <h5 class="card-body text-muted">NFT : {{ p.ownerproductchainaccount }}</h5>
+
+                </div>
+                <div class="card-footer text-muted">
+                    Posted {{ p.productid.insdttm }} by
+                    <a href="#">{{ p.productid.vendorid.vendorname | upper }}</a>
+                </div>
+            </div>
+        </div>
+
+
+    {% endfor %}
+    </div>
+
+    <hr>
+    <a class="btn btn-info btn-sm float-right" href="/meteorvendor/makenft/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make NFT</a>
+
+
+
+
+{% endblock %}

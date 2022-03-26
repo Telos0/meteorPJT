@@ -3,5 +3,6 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.ProductList.as_view()),
+    path('', views.OwnerProductList.as_view()),
+    path('makenft/', views.OwnerProductCreate.as_view()),
 ]
