@@ -1,0 +1,29 @@
+{% extends 'meteorvendor/base_vendor_pages.html' %}
+{% load crispy_forms_tags %}
+{% block head_title %}
+   ProductCreate
+{% endblock %}
+
+{% block main_area %}
+    <h1>Create New Product</h1>
+    <hr/>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form | crispy }}
+
+        <br/>
+        <div class="button">
+            <label for="chooseFile">
+                addImage
+            </label>
+        </div>
+        <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+
+
+        <button type="submit" class="btn btn-primary float-right">Submit</button>
+    </form>
+
+
+
+{% endblock %}

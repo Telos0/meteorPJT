@@ -36,6 +36,9 @@ class Product(models.Model):
     def __str__(self):
         return f'{self.productnickname}'
 
+    def get_absolute_url(self):
+        return f'/meteorvendor/'
+
 class OwnerProduct(models.Model):
     ownerid = models.ForeignKey(Owner, on_delete=models.CASCADE)
     productid = models.ForeignKey(Product, on_delete=models.CASCADE)

@@ -5,7 +5,26 @@
 {% endblock %}
 
 {% block main_area %}
+
+    <a class="btn btn-info btn-sm float-left" href="/meteorvendor/makeproduct/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Register New Product</a>
+    <a class="btn btn-info btn-sm float-right" href="/meteorvendor/makenft/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make NFT</a>
+    <br>
+    <hr>
+
     <div class="row">
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body">
+
+                    <h2 class="card-title">NFT List</h2>
+                    <h6 class="card-body text-muted">ALL list of account : 0x1d6d0ea6103825ABF19898A7d5c4F00B6bEa2fDe</h6>
+
+                </div>
+                <div class="card-footer text-muted">
+                    Posted by Telos
+                </div>
+            </div>
+        </div>
     {% for p in ownerproduct_list %}
         {% if forloop.counter|divisibleby:3 %}
             </div>
@@ -13,18 +32,22 @@
         {% if forloop.counter|divisibleby:3 %}
             <div class="row">
         {% endif %}
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <div class="card mb-4">
                <img class="card-img-top" src="{{ p.productid.productimageurl }}" alt="...">
                 <div class="card-body">
 
                     <h2 class="card-title">{{ p.productid.productnickname }}</h2>
-                    <h5 class="card-body text-muted">NFT : {{ p.ownerproductchainaccount }}</h5>
+                    <h6 class="card-body text-muted">NFT : {{ p.ownerproductchainaccount }}</h6>
 
                 </div>
                 <div class="card-footer text-muted">
                     Posted {{ p.productid.insdttm }} by
                     <a href="#">{{ p.productid.vendorid.vendorname | upper }}</a>
+
+                    <a class="fas fa-pen" href="/meteorvendor/ownerproductmodal/{{ p.ownerproductchainaccount }}" data-popup-url="/meteorvendor/ownerproductmodal/{{ p.ownerproductchainaccount }}">CHECK</a>
+
+
                 </div>
             </div>
         </div>
@@ -32,10 +55,6 @@
 
     {% endfor %}
     </div>
-
-    <hr>
-    <a class="btn btn-info btn-sm float-right" href="/meteorvendor/makenft/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make NFT</a>
-
 
 
 
