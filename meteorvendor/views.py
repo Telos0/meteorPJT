@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Vendor, Product, Owner, OwnerProduct, OwnerProductHistory
 
@@ -167,29 +167,6 @@ abi_makeProduct_contract = """\
 class ProductList(ListView):
     model = Product
 
-    def get_context_data(self, **kwargs):
-        context = super(ProductList, self).get_context_data()
-
-        productaccountList = []
-        productinfoblockchainList = []
-
-        inproduct = Product.objects.all()
-        for x in inproduct:
-            productaccountList.append(x.productaccount)
-
-        print(productaccountList)
-        abi = json.loads(abi_product_contract)
-        for i in productaccountList:
-            address = web3.toChecksumAddress(i)
-            contract = web3.eth.contract(address=address, abi=abi)
-            productinfo = contract.functions.getProductInfo().call()
-            productinfoblockchainList.append(productinfo)
-
-        context['productinfoblockchainList'] = productinfoblockchainList
-
-        print(productinfoblockchainList)
-        return context
-
 
 class OwnerProductList(ListView):
     model = OwnerProduct
@@ -286,4 +263,5 @@ class ProductCreate(CreateView):
 def ownerproductmodal(request, address):
     template_url = 'meteorvendor/ownerproductmodal.html'
     context = {}
-    return render(request, template_url, context)
+    print('x')
+    return HttpResponse(render(request, template_url, context))

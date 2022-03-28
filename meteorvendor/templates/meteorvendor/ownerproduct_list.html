@@ -6,7 +6,7 @@
 
 {% block main_area %}
 
-    <a class="btn btn-info btn-sm float-left" href="/meteorvendor/makeproduct/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Register New Product</a>
+    <a class="btn btn-info btn-sm float-left" href="/meteorvendor/productlist/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;ProductList</a>
     <a class="btn btn-info btn-sm float-right" href="/meteorvendor/makenft/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make NFT</a>
     <br>
     <hr>
@@ -45,8 +45,21 @@
                     Posted {{ p.productid.insdttm }} by
                     <a href="#">{{ p.productid.vendorid.vendorname | upper }}</a>
 
-                    <a class="fas fa-pen" href="/meteorvendor/ownerproductmodal/{{ p.ownerproductchainaccount }}" data-popup-url="/meteorvendor/ownerproductmodal/{{ p.ownerproductchainaccount }}">CHECK</a>
 
+                    <a data-toggle="modal" data-form="{% url 'ownerproductmodal' address=p.ownerproductchainaccount }" data-target="#myModal-{{ p.ownerproductchainaccount }}" role="button" data-backdrop="static">
+                        <span class="btn btn-xs btn-success">Open Modal</span>
+                    </a>
+
+
+                     <!-- Modal -->
+                      <div class="modal fade" id="myModal-{{ p.ownerproductchainaccount }}" role="dialog">
+                        <div class="modal-dialog">
+
+                          <!-- Modal content-->
+                            <div class="modal-content"></div>
+
+                        </div>
+                      </div>
 
                 </div>
             </div>

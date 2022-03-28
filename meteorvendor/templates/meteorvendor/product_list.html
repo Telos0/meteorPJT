@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block main_area %}
+
+
+    <a class="btn btn-info btn-sm float-right" href="/meteorvendor/productlist/makeproduct/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make New Product</a>
+    <br>
+    <hr>
     {% for p in product_list %}
     <div class="card mb-4">
        <img class="card-img-top" src="{{ p.productimageurl }}" alt="...">
