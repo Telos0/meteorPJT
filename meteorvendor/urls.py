@@ -9,4 +9,5 @@ urlpatterns = [
     path('productlist/makeproduct/', views.ProductCreate.as_view()),
 
     path('ownerproductmodal/<str:address>/', views.ownerproductmodal, name='ownerproductmodal'),
+    path('ownerproductblockinfo/<str:address>/', views.ownerproductblockinfo, name='ownerproductblockinfo'),
 ]

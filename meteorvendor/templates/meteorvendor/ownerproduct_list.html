@@ -6,6 +6,8 @@
 
 {% block main_area %}
 
+
+
     <a class="btn btn-info btn-sm float-left" href="/meteorvendor/productlist/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;ProductList</a>
     <a class="btn btn-info btn-sm float-right" href="/meteorvendor/makenft/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make NFT</a>
     <br>
@@ -38,7 +40,7 @@
                 <div class="card-body">
 
                     <h2 class="card-title">{{ p.productid.productnickname }}</h2>
-                    <h6 class="card-body text-muted">NFT : {{ p.ownerproductchainaccount }}</h6>
+                    <a class="card-body text-muted" href="/meteorvendor/ownerproductblockinfo/{{ p.ownerproductchainaccount }}/">NFT : {{ p.ownerproductchainaccount }}</a>
 
                 </div>
                 <div class="card-footer text-muted">
@@ -46,20 +48,8 @@
                     <a href="#">{{ p.productid.vendorid.vendorname | upper }}</a>
 
 
-                    <a data-toggle="modal" data-form="{% url 'ownerproductmodal' address=p.ownerproductchainaccount }" data-target="#myModal-{{ p.ownerproductchainaccount }}" role="button" data-backdrop="static">
-                        <span class="btn btn-xs btn-success">Open Modal</span>
-                    </a>
 
 
-                     <!-- Modal -->
-                      <div class="modal fade" id="myModal-{{ p.ownerproductchainaccount }}" role="dialog">
-                        <div class="modal-dialog">
-
-                          <!-- Modal content-->
-                            <div class="modal-content"></div>
-
-                        </div>
-                      </div>
 
                 </div>
             </div>
@@ -68,7 +58,6 @@
 
     {% endfor %}
     </div>
-
 
 
 {% endblock %}

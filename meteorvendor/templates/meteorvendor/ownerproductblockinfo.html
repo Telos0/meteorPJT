@@ -1,0 +1,21 @@
+{% extends 'meteorvendor/base_vendor_pages_nonewidget.html' %}
+
+{% block head_title %}
+   OwnerProductList
+{% endblock %}
+
+{% block main_area %}
+
+   <h3>Info of product in BlockChain</h3>
+
+   <hr>
+   <br>
+
+   <h4> OnwerAccount : {{ owner }} </h4>
+   <h4> ProductName : {{ product_name }} </h4>
+   <h4> ProductID : {{ product_id }} </h4>
+   <h4> VendorName : {{ vendor }} </h4>
+   <h4> ProductDescription : {{ product_description }} </h4>
+
+   <hr>
+{% endblock %}
