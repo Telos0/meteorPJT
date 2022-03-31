@@ -6,8 +6,16 @@
 
 {% block main_area %}
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+      </div>
+    </div>
 
-    <a class="btn btn-info btn-sm float-right" href="/meteorvendor/productlist/makeproduct/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make New Product</a>
+
+    <!-- Create book button -->
+    <button id="create-product" class="btn btn-primary" type="button" name="button">Create Product</button>
+
     <br>
     <hr>
     {% for p in product_list %}

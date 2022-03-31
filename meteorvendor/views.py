@@ -1,6 +1,10 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Vendor, Product, Owner, OwnerProduct, OwnerProductHistory
+
+from django.urls import reverse_lazy
+from .forms import ProductModelForm
+from bootstrap_modal_forms.generic import BSModalCreateView
 
 import json
 from web3 import Web3
@@ -258,6 +262,39 @@ class ProductCreate(CreateView):
         response = super(ProductCreate, self).form_valid(form)
 
         return response
+
+class ProductCreateModal(BSModalCreateView):
+    template_name = 'meteorvendor/product_form_modal.html'
+    form_class = ProductModelForm
+    success_message = 'Success: Product was created.'
+    success_url = reverse_lazy('meteorvendor:ProductList')
+
+    def form_valid(self, form):
+        if not self.request.is_ajax():
+            image = self.request.FILES['chooseFile']
+            print(image)
+            img_name = None
+            BLOB_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=blobstorageforpydev;AccountKey=ZJFb+5et4ROFCebrFvpNhWV9eT4cN68Uwa2wwjXPMeKsRhXTHmfDHKAbUO9wEr1gaDVQY+JKj8YGzwAEm+NINw==;EndpointSuffix=core.windows.net"
+            BLOB_CONTAINER_NAME = "devmeteor"
+
+            if self.request.FILES['chooseFile']:
+                img = self.request.FILES['chooseFile']
+                img_name = "ProductCreate_image_" + str(img) + str(datetime.datetime.now())
+
+                blob_service_client = BlobServiceClient.from_connection_string(BLOB_CONNECTION_STRING)
+                container_client = blob_service_client.get_container_client(BLOB_CONTAINER_NAME)
+                blob_client = container_client.get_blob_client(img_name)
+                blob_client.upload_blob(img, blob_type="BlockBlob")
+
+
+            temp_form = form.save(commit=False)
+            temp_form.productimageurl = f'https://blobstorageforpydev.blob.core.windows.net/devmeteor/{img_name}'
+            temp_form.save()
+
+
+            #response = super(ProductCreateModal, self).form_valid(form)
+
+        return HttpResponseRedirect(self.success_url)
 
 
 #FBV

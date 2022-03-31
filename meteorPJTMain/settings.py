@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 
 
     'crispy_forms',
-
+    'bootstrap_modal_forms',
 
     'single_pages',
     'meteorvendor',
