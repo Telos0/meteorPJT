@@ -77,7 +77,10 @@
         $("#create-product").modalForm({
             formURL: "{% url 'meteorvendor:ProductCreateModal' %}"
         });
-
+        $("#create-ownerproduct").modalForm({
+            formURL: "{% url 'meteorvendor:OwnerProductCreateModal' %}",
+            modalID: "#modalMakeNFT"
+        });
         $(".read-ownerproduct").each(function () {
             $(this).modalForm({formURL: $(this).data("form-url")});
         });

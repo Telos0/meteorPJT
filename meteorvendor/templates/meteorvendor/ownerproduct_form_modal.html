@@ -4,7 +4,7 @@
   {% csrf_token %}
 
  <div class="modal-header">
-    <h5 class="modal-title">Create new Product</h5>
+    <h5 class="modal-title">Create new NFT</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -12,13 +12,6 @@
 
   <div class="modal-body">
       {{ form | crispy }}
-      <br/>
-      <div class="button">
-          <label for="chooseFile">
-              <h6 class="text-muted">Addimage</h6>
-          </label>
-      </div>
-      <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
   </div>
 
   <div class="modal-footer">

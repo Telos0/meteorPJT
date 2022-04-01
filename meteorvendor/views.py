@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Vendor, Product, Owner, OwnerProduct, OwnerProductHistory
 
 from django.urls import reverse_lazy
-from .forms import ProductModelForm
+from .forms import ProductModelForm, OwnerProductModelForm
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalReadView
 
 import json
@@ -198,6 +198,7 @@ class OwnerProductList(ListView):
         print(productinfoblockchainList)
         return context
 
+#모달로 변경 --> OwnerProductCreateModal
 class OwnerProductCreate(CreateView):
     model = OwnerProduct
     fields = ['ownerid', 'productid']
@@ -232,6 +233,38 @@ class OwnerProductCreate(CreateView):
         return response
 
 
+class OwnerProductCreateModal(BSModalCreateView):
+    template_name = 'meteorvendor/ownerproduct_form_modal.html'
+    form_class = OwnerProductModelForm
+    success_message = 'Success: Product was created.'
+    success_url = reverse_lazy('meteorvendor:OwnerProductList')
+
+    def form_valid(self, form):
+        if not self.request.is_ajax():
+            ownerid = Owner.objects.get(id=self.request.POST.get('ownerid')).ownerid
+            ownername = Owner.objects.get(ownerid=ownerid).ownername
+            productid = Product.objects.get(id=self.request.POST.get('productid')).productid
+            productname = Product.objects.get(productid=productid).productnickname
+
+            web3.eth.defaultAccount = '0x1d6d0ea6103825ABF19898A7d5c4F00B6bEa2fDe'  # 'web3.eth.accounts[0]'
+            abi = json.loads(abi_makeProduct_contract)
+            address = web3.toChecksumAddress('0xd39842cef042a084408dc0b9328ad4ff9bcbb220')
+            contract = web3.eth.contract(address=address, abi=abi)
+            tx_hash = contract.functions.makeProduct(productname, productid, ownername, "11").transact()
+            tx_receipt = web3.eth.waitForTransactionReceipt(tx_hash)
+
+            logs = contract.events.Transfer().processReceipt(tx_receipt)
+            print(logs)
+
+            ownerproductchainaccount = logs[0]['args']['pAddress']
+
+            temp_form = form.save(commit=False)
+            temp_form.ownerproductchainaccount = ownerproductchainaccount
+            temp_form.save()
+
+        return HttpResponseRedirect(self.success_url)
+
+#모달로 변경 --> ProductCreateModal
 class ProductCreate(CreateView):
     model = Product
     fields = ['productid', 'productnickname', 'vendorid']

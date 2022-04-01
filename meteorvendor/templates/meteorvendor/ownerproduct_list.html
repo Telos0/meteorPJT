@@ -9,7 +9,19 @@
 
 
     <a class="btn btn-info btn-sm float-left" href="/meteorvendor/productlist/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;ProductList</a>
-    <a class="btn btn-info btn-sm float-right" href="/meteorvendor/makenft/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make NFT</a>
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalMakeNFT">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+
+    <!-- Create button -->
+    <button id="create-ownerproduct" class="btn btn-info btn-sm float-right" type="button" name="button"><i class="fas fa-pen"></i>Make NFT</button>
+
+<!--    <a class="btn btn-info btn-sm float-right" href="/meteorvendor/makenft/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make NFT</a>-->
     <br>
     <hr>
 
@@ -40,11 +52,11 @@
                 <div class="card-body">
 
                     <h2 class="card-title">{{ p.productid.productnickname }}</h2>
-                    <a class="card-body text-muted">NFT : {{ p.ownerproductchainaccount }}</a>
+                    <h7 class="card-body text-muted">NFT : {{ p.ownerproductchainaccount }}</h7>
 
                 </div>
                 <div class="card-footer text-muted">
-                    Posted {{ p.productid.insdttm }} by
+                    Posted {{ p.upddttm }} by
                     <a href="#">{{ p.productid.vendorid.vendorname | upper }}</a>
 
 

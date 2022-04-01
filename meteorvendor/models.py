@@ -44,6 +44,8 @@ class OwnerProduct(models.Model):
     productid = models.ForeignKey(Product, on_delete=models.CASCADE)
     ownerproductchainaccount = models.CharField(max_length=200, unique=True)
     issuedyn = models.BooleanField(default='N')
+    insdttm = models.DateTimeField(auto_now_add=True)
+    upddttm = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.ownerproductchainaccount}'
