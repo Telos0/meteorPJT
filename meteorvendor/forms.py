@@ -5,3 +5,8 @@ class ProductModelForm(BSModalModelForm):
     class Meta:
         model = Product
         fields = ['productid', 'productnickname', 'vendorid']
+
+class OwnerProductModelForm(BSModalModelForm):
+    class Meta:
+        model = OwnerProduct
+        fields = ['ownerid', 'productid', 'issuedyn']

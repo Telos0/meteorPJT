@@ -4,7 +4,7 @@ from .models import Vendor, Product, Owner, OwnerProduct, OwnerProductHistory
 
 from django.urls import reverse_lazy
 from .forms import ProductModelForm
-from bootstrap_modal_forms.generic import BSModalCreateView
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalReadView
 
 import json
 from web3 import Web3
@@ -296,7 +296,35 @@ class ProductCreateModal(BSModalCreateView):
 
         return HttpResponseRedirect(self.success_url)
 
+class OwnerProductReadModal(BSModalReadView):
+    model = OwnerProduct
+    template_name = 'meteorvendor/ownerproductmodal.html'
 
+
+    def get_context_data(self, **kwargs):
+        context = super(OwnerProductReadModal, self).get_context_data()
+        print(context['ownerproduct'])
+
+
+        address = str(context['ownerproduct'])
+        abi = json.loads(abi_product_contract)
+        address = web3.toChecksumAddress(address)
+        contract = web3.eth.contract(address=address, abi=abi)
+        productinfo = contract.functions.getProductInfo().call()
+
+        owner = productinfo[0]
+        product_name = productinfo[1]
+        product_id = productinfo[2]
+        vendor = productinfo[3]
+        product_description = productinfo[4]
+
+        context['owner'] = owner
+        context['product_name'] = product_name
+        context['product_id'] = product_id
+        context['vendor'] = vendor
+        context['product_description'] = product_description
+
+        return context
 #FBV
 
 #사용보류

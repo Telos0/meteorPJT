@@ -78,7 +78,13 @@
             formURL: "{% url 'meteorvendor:ProductCreateModal' %}"
         });
 
+        $(".read-ownerproduct").each(function () {
+            $(this).modalForm({formURL: $(this).data("form-url")});
+        });
+
     });
+
+
     </script>
 </body>
 </html>
