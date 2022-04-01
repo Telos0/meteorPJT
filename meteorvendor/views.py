@@ -17,9 +17,25 @@ from azure.storage.blob import BlobServiceClient
 ganache_url = "http://52.231.178.69:7545"
 web3 = Web3(Web3.HTTPProvider(ganache_url))
 
+defaultaccount = "0x1d6d0ea6103825ABF19898A7d5c4F00B6bEa2fDe"
+makeproductaddress = "0x958B5f2536fe36E2579A736189c5037f8e91225A"
 #abis
 abi_product_contract = """\
 [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_toOwner",
+				"type": "address"
+			}
+		],
+		"name": "changeOwner",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
 	{
 		"constant": false,
 		"inputs": [],
@@ -27,20 +43,6 @@ abi_product_contract = """\
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getProductAddress",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -59,7 +61,7 @@ abi_product_contract = """\
 				"type": "string"
 			},
 			{
-				"name": "_vendor",
+				"name": "_vendorname",
 				"type": "string"
 			},
 			{
@@ -71,6 +73,34 @@ abi_product_contract = """\
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getAddressList",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getProductAddress",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -119,7 +149,7 @@ abi_makeProduct_contract = """\
 				"type": "string"
 			},
 			{
-				"name": "_vendor",
+				"name": "_vendorname",
 				"type": "string"
 			},
 			{
@@ -131,20 +161,6 @@ abi_makeProduct_contract = """\
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getMakeProductAddress",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -163,6 +179,20 @@ abi_makeProduct_contract = """\
 		],
 		"name": "Transfer",
 		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getMakeProductAddress",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
 ]"""
 
@@ -210,9 +240,9 @@ class OwnerProductCreate(CreateView):
         productid = Product.objects.get(id=self.request.POST.get('productid')).productid
         productname = Product.objects.get(productid=productid).productnickname
 
-        web3.eth.defaultAccount = '0x1d6d0ea6103825ABF19898A7d5c4F00B6bEa2fDe'  # 'web3.eth.accounts[0]'
+        web3.eth.defaultAccount = defaultaccount  # 'web3.eth.accounts[0]'
         abi = json.loads(abi_makeProduct_contract)
-        address = web3.toChecksumAddress('0xd39842cef042a084408dc0b9328ad4ff9bcbb220')
+        address = web3.toChecksumAddress(makeproductaddress)
         contract = web3.eth.contract(address=address, abi=abi)
         tx_hash = contract.functions.makeProduct(productname, productid, ownername, "11").transact()
         tx_receipt = web3.eth.waitForTransactionReceipt(tx_hash)
@@ -246,9 +276,9 @@ class OwnerProductCreateModal(BSModalCreateView):
             productid = Product.objects.get(id=self.request.POST.get('productid')).productid
             productname = Product.objects.get(productid=productid).productnickname
 
-            web3.eth.defaultAccount = '0x1d6d0ea6103825ABF19898A7d5c4F00B6bEa2fDe'  # 'web3.eth.accounts[0]'
+            web3.eth.defaultAccount = defaultaccount  # 'web3.eth.accounts[0]'
             abi = json.loads(abi_makeProduct_contract)
-            address = web3.toChecksumAddress('0xd39842cef042a084408dc0b9328ad4ff9bcbb220')
+            address = web3.toChecksumAddress(makeproductaddress)
             contract = web3.eth.contract(address=address, abi=abi)
             tx_hash = contract.functions.makeProduct(productname, productid, ownername, "11").transact()
             tx_receipt = web3.eth.waitForTransactionReceipt(tx_hash)
@@ -348,13 +378,13 @@ class OwnerProductReadModal(BSModalReadView):
         owner = productinfo[0]
         product_name = productinfo[1]
         product_id = productinfo[2]
-        vendor = productinfo[3]
+        vendorname = productinfo[3]
         product_description = productinfo[4]
 
         context['owner'] = owner
         context['product_name'] = product_name
         context['product_id'] = product_id
-        context['vendor'] = vendor
+        context['vendorname'] = vendorname
         context['product_description'] = product_description
 
         return context
