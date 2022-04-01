@@ -376,42 +376,22 @@ class OwnerProductReadModal(BSModalReadView):
         productinfo = contract.functions.getProductInfo().call()
 
         owner = productinfo[0]
+        ownername = Owner.objects.get(ownerchainaccount=owner).ownername
         product_name = productinfo[1]
         product_id = productinfo[2]
         vendorname = productinfo[3]
         product_description = productinfo[4]
 
         context['owner'] = owner
+        context['ownername'] = ownername
         context['product_name'] = product_name
         context['product_id'] = product_id
         context['vendorname'] = vendorname
         context['product_description'] = product_description
 
         return context
+
+
+
 #FBV
 
-#사용보류
-def ownerproductmodal(request, address):
-    template_url = 'meteorvendor/ownerproductmodal.html'
-    context = {}
-    print('x')
-    return HttpResponse(render(request, template_url, context))
-
-
-def ownerproductblockinfo(request, address):
-    template_url = 'meteorvendor/ownerproductblockinfo.html'
-
-    abi = json.loads(abi_product_contract)
-    address = web3.toChecksumAddress(address)
-    contract = web3.eth.contract(address=address, abi=abi)
-    productinfo = contract.functions.getProductInfo().call()
-
-    owner = productinfo[0]
-    product_name = productinfo[1]
-    product_id = productinfo[2]
-    vendor = productinfo[3]
-    product_description = productinfo[4]
-
-    context = {'owner' : owner, 'product_name' : product_name, 'product_id' : product_id, 'vendor' : vendor, 'product_description' : product_description}
-
-    return HttpResponse(render(request, template_url, context))
