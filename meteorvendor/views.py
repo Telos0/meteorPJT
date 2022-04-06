@@ -211,22 +211,22 @@ class OwnerProductList(ListView):
         productaccountList = []
         productinfoblockchainList = []
 
-        blockchainstate = web3.isConnected()
+        #blockchainstate = web3.isConnected()
 
-        inproduct = OwnerProduct.objects.all()
-        for x in inproduct:
-            productaccountList.append(x.ownerproductchainaccount)
+        # inproduct = OwnerProduct.objects.all()
+        # for x in inproduct:
+        #     productaccountList.append(x.ownerproductchainaccount)
 
         #print(productaccountList)
-        abi = json.loads(abi_product_contract)
-        for i in productaccountList:
-            address = web3.toChecksumAddress(i)
-            contract = web3.eth.contract(address=address, abi=abi)
-            productinfo = contract.functions.getProductInfo().call()
-            productinfoblockchainList.append(productinfo)
-
-        context['productinfoblockchainList'] = productinfoblockchainList
-        context['blockchainstate'] = blockchainstate
+        # abi = json.loads(abi_product_contract)
+        # for i in productaccountList:
+        #     address = web3.toChecksumAddress(i)
+        #     contract = web3.eth.contract(address=address, abi=abi)
+        #     productinfo = contract.functions.getProductInfo().call()
+        #     productinfoblockchainList.append(productinfo)
+        #
+        # context['productinfoblockchainList'] = productinfoblockchainList
+        #context['blockchainstate'] = blockchainstate
         #print(productinfoblockchainList)
         return context
 
