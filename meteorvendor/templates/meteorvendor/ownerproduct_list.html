@@ -31,7 +31,12 @@
                 <div class="card-body">
 
                     <h2 class="card-title">NFT List</h2>
-                    <h6 class="card-body text-muted">ALL list of account : 0x1d6d0ea6103825ABF19898A7d5c4F00B6bEa2fDe</h6>
+                    {% if blockchainstate == True %}
+                        <span class="badge rounded-pill badge-success" >&nbsp;&nbsp;BlockChainServer Running : {{ blockchainstate }}&nbsp;&nbsp;</span>
+                    {% else %}
+                        <span class="badge rounded-pill badge-danger" >&nbsp;&nbsp;BlockChainServer Running : {{ blockchainstate }}&nbsp;&nbsp;</span>
+                    {% endif %}
+                    <h6 class="card-body text-muted">NFTs OwnerAccount : 0x1d6d0ea6103825ABF19898A7d5c4F00B6bEa2fDe</h6>
 
                 </div>
                 <div class="card-footer text-muted">

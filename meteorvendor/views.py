@@ -207,15 +207,17 @@ class OwnerProductList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(OwnerProductList, self).get_context_data()
-        print(context)
+        #print(context)
         productaccountList = []
         productinfoblockchainList = []
+
+        blockchainstate = web3.isConnected()
 
         inproduct = OwnerProduct.objects.all()
         for x in inproduct:
             productaccountList.append(x.ownerproductchainaccount)
 
-        print(productaccountList)
+        #print(productaccountList)
         abi = json.loads(abi_product_contract)
         for i in productaccountList:
             address = web3.toChecksumAddress(i)
@@ -224,8 +226,8 @@ class OwnerProductList(ListView):
             productinfoblockchainList.append(productinfo)
 
         context['productinfoblockchainList'] = productinfoblockchainList
-
-        print(productinfoblockchainList)
+        context['blockchainstate'] = blockchainstate
+        #print(productinfoblockchainList)
         return context
 
 #모달로 변경 --> OwnerProductCreateModal
@@ -284,7 +286,7 @@ class OwnerProductCreateModal(BSModalCreateView):
             tx_receipt = web3.eth.waitForTransactionReceipt(tx_hash)
 
             logs = contract.events.Transfer().processReceipt(tx_receipt)
-            print(logs)
+            #print(logs)
 
             ownerproductchainaccount = logs[0]['args']['pAddress']
 
@@ -335,7 +337,6 @@ class ProductCreateModal(BSModalCreateView):
     def form_valid(self, form):
         if not self.request.is_ajax():
             image = self.request.FILES['chooseFile']
-            print(image)
             img_name = None
             BLOB_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=blobstorageforpydev;AccountKey=ZJFb+5et4ROFCebrFvpNhWV9eT4cN68Uwa2wwjXPMeKsRhXTHmfDHKAbUO9wEr1gaDVQY+JKj8YGzwAEm+NINw==;EndpointSuffix=core.windows.net"
             BLOB_CONTAINER_NAME = "devmeteor"
@@ -366,7 +367,7 @@ class OwnerProductReadModal(BSModalReadView):
 
     def get_context_data(self, **kwargs):
         context = super(OwnerProductReadModal, self).get_context_data()
-        print(context['ownerproduct'])
+        #print(context['ownerproduct'])
 
 
         address = str(context['ownerproduct'])
