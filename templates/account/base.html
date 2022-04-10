@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+  <head>
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
+    <link href="{% static 'meteorvendor/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+  </head>
+  <body class="">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container">
+              <a class="navbar-brand" href="/">Telos pages</a>
+          </div>
+    </nav>
+
+    <div class="container my-3">
+        <div class="row">
+            <div class="col-md-8 col-lg-9">
+              {% block body %}
+
+              {% block content %}
+              {% endblock %}
+
+              {% endblock %}
+
+              {% block extra_body %}
+              {% endblock %}
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div class="fixed-bottom">
+        <footer class="py-5 bg-dark">
+            <div class="container">
+                <p class="m-0 text-center text-white">
+                    Copyright &copy; Kyoungseo Lee : Telos 2022
+                </p>
+            </div>
+        </footer>
+    </div>
+  </body>
+</html>

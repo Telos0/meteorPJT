@@ -22,5 +22,6 @@ urlpatterns = [
     path('meteorexchange/', include('meteorexchange.urls')),
     path('meteorwallet/', include('meteorwallet.urls')),
     path('meteormetaverse/', include('meteormetaverse.urls')),
+    path('accounts/', include('allauth.urls')),
     path('', include('single_pages.urls')),
 ]

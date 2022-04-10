@@ -21,9 +21,18 @@
     <!-- Create button -->
     <button id="create-ownerproduct" class="btn btn-info btn-sm float-right" type="button" name="button"><i class="fas fa-pen"></i>Make NFT</button>
 
+
+
+
 <!--    <a class="btn btn-info btn-sm float-right" href="/meteorvendor/makenft/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make NFT</a>-->
     <br>
     <hr>
+
+    {% if haschainaccountYN == 'N' %}
+
+        <a class="btn btn-info btn-sm" href="#" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make Blockchaincaaount</a>
+
+    {% endif %}
 
     <div class="row">
         <div class="col-lg-4">

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Vendor, Product, Owner, OwnerProduct, OwnerProductHistory
 
 from django.urls import reverse_lazy
@@ -198,36 +199,36 @@ abi_makeProduct_contract = """\
 
 # Create your views here.
 
-class ProductList(ListView):
+class ProductList(LoginRequiredMixin, ListView):
     model = Product
 
 
-class OwnerProductList(ListView):
+class OwnerProductList(LoginRequiredMixin, ListView):
     model = OwnerProduct
+
+
 
     def get_context_data(self, **kwargs):
         context = super(OwnerProductList, self).get_context_data()
-        #print(context)
-        productaccountList = []
-        productinfoblockchainList = []
 
+        print(self.request.user)
+        try:
+            owner = Owner.objects.get(user=self.request.user)
+        except Owner.DoesNotExist:
+            owner = None
+        print(owner)
+
+        if owner == None:
+            context['haschainaccountYN'] = 'N'
+        else:
+            context['haschainaccountYN'] = 'Y'
+
+
+        context['ownerproduct_list'] = OwnerProduct.objects.filter(ownerid=owner)
+        #블록체인 상태 확인
         #blockchainstate = web3.isConnected()
-
-        # inproduct = OwnerProduct.objects.all()
-        # for x in inproduct:
-        #     productaccountList.append(x.ownerproductchainaccount)
-
-        #print(productaccountList)
-        # abi = json.loads(abi_product_contract)
-        # for i in productaccountList:
-        #     address = web3.toChecksumAddress(i)
-        #     contract = web3.eth.contract(address=address, abi=abi)
-        #     productinfo = contract.functions.getProductInfo().call()
-        #     productinfoblockchainList.append(productinfo)
-        #
-        # context['productinfoblockchainList'] = productinfoblockchainList
         #context['blockchainstate'] = blockchainstate
-        #print(productinfoblockchainList)
+
         return context
 
 #모달로 변경 --> OwnerProductCreateModal
@@ -265,7 +266,7 @@ class OwnerProductCreate(CreateView):
         return response
 
 
-class OwnerProductCreateModal(BSModalCreateView):
+class OwnerProductCreateModal(LoginRequiredMixin, BSModalCreateView):
     template_name = 'meteorvendor/ownerproduct_form_modal.html'
     form_class = OwnerProductModelForm
     success_message = 'Success: Product was created.'
@@ -328,7 +329,7 @@ class ProductCreate(CreateView):
 
         return response
 
-class ProductCreateModal(BSModalCreateView):
+class ProductCreateModal(LoginRequiredMixin, BSModalCreateView):
     template_name = 'meteorvendor/product_form_modal.html'
     form_class = ProductModelForm
     success_message = 'Success: Product was created.'
@@ -360,7 +361,7 @@ class ProductCreateModal(BSModalCreateView):
 
         return HttpResponseRedirect(self.success_url)
 
-class OwnerProductReadModal(BSModalReadView):
+class OwnerProductReadModal(LoginRequiredMixin, BSModalReadView):
     model = OwnerProduct
     template_name = 'meteorvendor/ownerproductmodal.html'
 
