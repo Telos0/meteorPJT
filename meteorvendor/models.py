@@ -16,7 +16,7 @@ class Vendor(models.Model):
 
 class Owner(models.Model):
     ownerid = models.CharField(max_length=30, unique=True)
-    ownerpassword = models.CharField(max_length=30)
+    ownerpassword = models.CharField(max_length=30, null=True)
     ownername = models.CharField(max_length=30)
     oweneremail = models.EmailField(max_length=128, null=True)
     ownerchainaccount = models.CharField(max_length=200, unique=True)

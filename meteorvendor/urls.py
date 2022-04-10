@@ -16,4 +16,6 @@ urlpatterns = [
     #path('ownerproductmodal/<str:address>/', views.ownerproductmodal, name='ownerproductmodal'),
     #path('ownerproductblockinfo/<str:address>/', views.ownerproductblockinfo, name='ownerproductblockinfo'),
     path('ownerproductmodal/<int:pk>/', views.OwnerProductReadModal.as_view(), name='OwnerProductReadModal'),
+
+    path('makechainaccount/', views.makechainaccount, name='MakeChainAccount'),
 ]

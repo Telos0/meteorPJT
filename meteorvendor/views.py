@@ -206,8 +206,6 @@ class ProductList(LoginRequiredMixin, ListView):
 class OwnerProductList(LoginRequiredMixin, ListView):
     model = OwnerProduct
 
-
-
     def get_context_data(self, **kwargs):
         context = super(OwnerProductList, self).get_context_data()
 
@@ -220,8 +218,10 @@ class OwnerProductList(LoginRequiredMixin, ListView):
 
         if owner == None:
             context['haschainaccountYN'] = 'N'
+            context['ownerchainaccount'] = 'Not exist'
         else:
             context['haschainaccountYN'] = 'Y'
+            context['ownerchainaccount'] = owner.ownerchainaccount
 
 
         context['ownerproduct_list'] = OwnerProduct.objects.filter(ownerid=owner)
@@ -397,3 +397,24 @@ class OwnerProductReadModal(LoginRequiredMixin, BSModalReadView):
 
 #FBV
 
+def makechainaccount(request):
+
+    user = request.user
+    ownerid = user.username
+    ownername = user.username
+    owneremail = user.email
+
+    ganache_url = "http://52.231.178.69:7545"
+    web3 = Web3(Web3.HTTPProvider(ganache_url))
+
+    # make new account
+    new_account = web3.parity.personal.new_account('the-passphrase')
+
+
+    ownerchainaccount = new_account
+
+    owner = Owner(ownerid=ownerid, ownername=ownername, ownerchainaccount=ownerchainaccount, user=user)
+    owner.save()
+
+    success_url = reverse_lazy('meteorvendor:OwnerProductList')
+    return HttpResponseRedirect(success_url)

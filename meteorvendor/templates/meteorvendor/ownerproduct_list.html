@@ -19,8 +19,9 @@
 
 
     <!-- Create button -->
-    <button id="create-ownerproduct" class="btn btn-info btn-sm float-right" type="button" name="button"><i class="fas fa-pen"></i>Make NFT</button>
-
+    {% if user.is_superuser %}
+        <button id="create-ownerproduct" class="btn btn-info btn-sm float-right" type="button" name="button"><i class="fas fa-pen"></i>Make NFT</button>
+    {% endif %}
 
 
 
@@ -30,7 +31,7 @@
 
     {% if haschainaccountYN == 'N' %}
 
-        <a class="btn btn-info btn-sm" href="#" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make Blockchaincaaount</a>
+        <a class="btn btn-info btn-sm" href="/meteorvendor/makechainaccount/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make Blockchaincaaount</a>
 
     {% endif %}
 
@@ -45,7 +46,7 @@
 <!--                    {% else %}-->
 <!--                        <span class="badge rounded-pill badge-danger" >&nbsp;&nbsp;BlockChainServer Running : {{ blockchainstate }}&nbsp;&nbsp;</span>-->
 <!--                    {% endif %}-->
-                    <h6 class="card-body text-muted">NFTs OwnerAccount : 0x1d6d0ea6103825ABF19898A7d5c4F00B6bEa2fDe</h6>
+                    <h6 class="card-body text-muted">NFTs OwnerAccount : {{ ownerchainaccount }}</h6>
 
                 </div>
                 <div class="card-footer text-muted">
