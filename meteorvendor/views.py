@@ -219,9 +219,11 @@ class OwnerProductList(LoginRequiredMixin, ListView):
         if owner == None:
             context['haschainaccountYN'] = 'N'
             context['ownerchainaccount'] = 'Not exist'
+            context['vendorYN'] = False
         else:
             context['haschainaccountYN'] = 'Y'
             context['ownerchainaccount'] = owner.ownerchainaccount
+            context['vendorYN'] = owner.vendorYN
 
 
         context['ownerproduct_list'] = OwnerProduct.objects.filter(ownerid=owner)

@@ -6,10 +6,11 @@
 
 {% block main_area %}
 
+    {% if vendorYN == False %}
 
-
-    <a class="btn btn-info btn-sm float-left" href="/meteorvendor/productlist/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;ProductList</a>
-
+    {% else %}
+        <a class="btn btn-info btn-sm float-left" href="/meteorvendor/productlist/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;ProductList</a>
+    {% endif %}
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modalMakeNFT">
       <div class="modal-dialog" role="document">
@@ -33,66 +34,76 @@
 
         <a class="btn btn-info btn-sm" href="/meteorvendor/makechainaccount/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make Blockchaincaaount</a>
 
-    {% endif %}
+    {% else %}
 
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="card mb-4">
-                <div class="card-body">
-
-                    <h2 class="card-title">NFT List</h2>
-<!--                    {% if blockchainstate == True %}-->
-<!--                        <span class="badge rounded-pill badge-success" >&nbsp;&nbsp;BlockChainServer Running : {{ blockchainstate }}&nbsp;&nbsp;</span>-->
-<!--                    {% else %}-->
-<!--                        <span class="badge rounded-pill badge-danger" >&nbsp;&nbsp;BlockChainServer Running : {{ blockchainstate }}&nbsp;&nbsp;</span>-->
-<!--                    {% endif %}-->
-                    <h6 class="card-body text-muted">NFTs OwnerAccount : {{ ownerchainaccount }}</h6>
-
-                </div>
-                <div class="card-footer text-muted">
-                    Posted by Telos
-                </div>
-            </div>
-        </div>
-    {% for p in ownerproduct_list %}
-        {% if forloop.counter|divisibleby:3 %}
-            </div>
-        {% endif %}
-        {% if forloop.counter|divisibleby:3 %}
+        {% if vendorYN == False %}
+            <p> This account is not Vendor account. If you are vendor please contact to admin for right authority </p>
+        {% else %}
             <div class="row">
-        {% endif %}
-        <div class="col-lg-4">
-            <div class="card mb-4">
-               <img class="card-img-top" src="{{ p.productid.productimageurl }}" alt="...">
-                <div class="card-body">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
 
-                    <h2 class="card-title">{{ p.productid.productnickname }}</h2>
-                    <h7 class="card-body text-muted">NFT : {{ p.ownerproductchainaccount }}</h7>
+                            <h2 class="card-title">NFT List</h2>
+        <!--                    {% if blockchainstate == True %}-->
+        <!--                        <span class="badge rounded-pill badge-success" >&nbsp;&nbsp;BlockChainServer Running : {{ blockchainstate }}&nbsp;&nbsp;</span>-->
+        <!--                    {% else %}-->
+        <!--                        <span class="badge rounded-pill badge-danger" >&nbsp;&nbsp;BlockChainServer Running : {{ blockchainstate }}&nbsp;&nbsp;</span>-->
+        <!--                    {% endif %}-->
+                            <h6 class="card-body text-muted">NFTs OwnerAccount : {{ ownerchainaccount }}</h6>
 
-                </div>
-                <div class="card-footer text-muted">
-                    Posted {{ p.upddttm }} by
-                    <a href="#">{{ p.productid.vendorid.vendorname | upper }}</a>
-
-
-                    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content"></div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Posted by Telos
                         </div>
                     </div>
-                    <button type="button" class="read-ownerproduct bs-modal btn btn-sm btn-primary" data-form-url="{% url 'meteorvendor:OwnerProductReadModal' p.pk %}">
-                        <span class="fa fa-eye">NFT info</span>
-                    </button>
-
-
-
                 </div>
+            {% for p in ownerproduct_list %}
+                {% if forloop.counter|divisibleby:3 %}
+                    </div>
+                {% endif %}
+                {% if forloop.counter|divisibleby:3 %}
+                    <div class="row">
+                {% endif %}
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                       <img class="card-img-top" src="{{ p.productid.productimageurl }}" alt="...">
+                        <div class="card-body">
+
+                            <h2 class="card-title">{{ p.productid.productnickname }}</h2>
+                            <h7 class="card-body text-muted">NFT : {{ p.ownerproductchainaccount }}</h7>
+
+                        </div>
+                        <div class="card-footer text-muted">
+                            Posted {{ p.upddttm }} by
+                            <a href="#">{{ p.productid.vendorid.vendorname | upper }}</a>
+
+
+                            <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content"></div>
+                                </div>
+                            </div>
+                            <button type="button" class="read-ownerproduct bs-modal btn btn-sm btn-primary" data-form-url="{% url 'meteorvendor:OwnerProductReadModal' p.pk %}">
+                                <span class="fa fa-eye">NFT info</span>
+                            </button>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            {% endfor %}
             </div>
-        </div>
+        {% endif %}
+
+    {% endif %}
 
 
-    {% endfor %}
-    </div>
+
+
 
 
 {% endblock %}

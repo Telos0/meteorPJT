@@ -20,6 +20,7 @@ class Owner(models.Model):
     ownername = models.CharField(max_length=30)
     oweneremail = models.EmailField(max_length=128, null=True)
     ownerchainaccount = models.CharField(max_length=200, unique=True)
+    vendorYN = models.BooleanField(default=False)
     insdttm = models.DateTimeField(auto_now_add=True)
     upddttm = models.DateTimeField(auto_now=True)
 
@@ -46,7 +47,7 @@ class OwnerProduct(models.Model):
     ownerid = models.ForeignKey(Owner, on_delete=models.CASCADE)
     productid = models.ForeignKey(Product, on_delete=models.CASCADE)
     ownerproductchainaccount = models.CharField(max_length=200, unique=True)
-    issuedyn = models.BooleanField(default='N')
+    issuedyn = models.BooleanField(default=False)
     insdttm = models.DateTimeField(auto_now_add=True)
     upddttm = models.DateTimeField(auto_now=True)
 
