@@ -4,8 +4,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Vendor, Product, Owner, OwnerProduct, OwnerProductHistory
 
 from django.urls import reverse_lazy
-from .forms import ProductModelForm, OwnerProductModelForm
-from bootstrap_modal_forms.generic import BSModalCreateView, BSModalReadView
+from django.http import Http404
+from .forms import ProductModelForm, OwnerProductModelForm, OwnerProductModelUpdateForm
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalReadView, BSModalUpdateView
 
 import json
 from web3 import Web3
@@ -299,6 +300,34 @@ class OwnerProductCreateModal(LoginRequiredMixin, BSModalCreateView):
 
         return HttpResponseRedirect(self.success_url)
 
+
+class OwnerProductUpdateModal(LoginRequiredMixin, BSModalUpdateView):
+    model = OwnerProduct
+    template_name = 'meteorvendor/ownerproductupdate_form_modal.html'
+    form_class = OwnerProductModelUpdateForm
+    success_message = 'Success: Product was updated.'
+    success_url = reverse_lazy('meteorvendor:OwnerProductList')
+
+    def form_valid(self, form):
+        if not self.request.is_ajax():
+            toownerchainaccount = self.request.POST.get('ownerproductchainaccount')
+            try:
+                toownerid = Owner.objects.get(ownerproductchainaccount=toownerchainaccount)
+            except Owner.DoesNotExist:
+                #redirect로 나중에 변경
+                raise Http404
+            print(toownerchainaccount)
+
+            # web3.eth.defaultAccount = defaultaccount  # 'web3.eth.accounts[0]'
+
+
+            temp_form = form.save(commit=False)
+            temp_form.ownerid = toownerid
+            temp_form.ownerproductchainaccount = toownerchainaccount
+            temp_form.save()
+
+        return HttpResponseRedirect(self.success_url)
+
 #모달로 변경 --> ProductCreateModal
 class ProductCreate(CreateView):
     model = Product
@@ -418,5 +447,5 @@ def makechainaccount(request):
     owner = Owner(ownerid=ownerid, ownername=ownername, ownerchainaccount=ownerchainaccount, user=user)
     owner.save()
 
-    success_url = reverse_lazy('meteorvendor:OwnerProductList')
+    success_url = reverse_lazy('single_pages:landing')
     return HttpResponseRedirect(success_url)

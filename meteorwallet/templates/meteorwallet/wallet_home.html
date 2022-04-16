@@ -8,17 +8,71 @@
 {% block main_area %}
 
 
-    <p>Good afternoon everybody</p>
+    {% if haschainaccountYN == 'N' %}
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <span class="fa-stack fa-4x">
+                <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                <i class="fas fa-wallet fa-stack-1x fa-inverse"></i>
+            </span>
 
-    <br>
-    <hr>
-    <br>
+            <h1 class="display-4">Your Wallet</h1>
+            <p class="lead">You don't have blockchain wallet yet, if you want to make your wallet please click below button.</p>
+
+            <a class="btn btn-info btn-sm" href="/meteorvendor/makechainaccount/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;Make Blockchaincaaount</a>
+        </div>
+    {% else %}
+
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <span class="fa-stack fa-4x">
+                <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                <i class="fas fa-wallet fa-stack-1x fa-inverse"></i>
+            </span>
+
+            <h1 class="display-4">Your Wallet</h1>
+            <p class="lead">Here is your wallet information, Most important thing is wallet account. When you trade product with others you have to check others wallet account. Below you can check your product and information of blockchain blablabla</p>
+            <p class="lead">Your wallet account : {{ owner_list.ownerchainaccount }}</p>
+        </div>
 
 
 
-    <h3>{{ owner_list.ownerid }}</h3>
+        <br>
+        <hr>
+        <br>
 
-    <h5>{{ owner_list.ownername }}</h5>
+        <div class="container">
+          <div class="card-deck mb-3 text-center">
+            {% for p in ownerproduct_list %}
+
+            <div class="card mb-4 box-shadow">
+              <div class="card-body">
+                <img class="card-img-top" src="{{ p.productid.productimageurl }}" alt="...">
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>{{ p.productid.productnickname }}</li>
+                  <li>Posted {{ p.upddttm }} by {{ p.productid.vendorid.vendorname | upper }}</li>
+                  <li>NFT : {{ p.ownerproductchainaccount }}</li>
+                </ul>
+
+              </div>
+                <div class="card-footer">
+                    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content"></div>
+                        </div>
+                    </div>
+                    <button type="button" class="read-ownerproduct bs-modal btn btn-sm btn-primary" data-form-url="{% url 'meteorwallet:OwnerProductReadModal' p.pk %}"><h6>Check Blockchain Info</h6></button>
+                </div>
+            </div>
+
+            {% endfor %}
+          </div>
+
+        </div>
+
+        <br>
+        <hr>
+        <br>
+
+    {% endif %}
 
 
 

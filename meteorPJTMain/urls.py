@@ -23,5 +23,5 @@ urlpatterns = [
     path('meteorwallet/', include('meteorwallet.urls')),
     path('meteormetaverse/', include('meteormetaverse.urls')),
     path('accounts/', include('allauth.urls')),
-    path('', include('single_pages.urls')),
+    path('', include(('single_pages.urls', 'single_pages'), namespace='single_pages')),
 ]

@@ -70,10 +70,21 @@
         crossorigin="anonymous"></script>
     <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
 
-
     <script type="text/javascript">
+    $(document).ready(function() {
 
+        $("#create-product").modalForm({
+            formURL: "{% url 'meteorvendor:ProductCreateModal' %}"
+        });
+        $("#create-ownerproduct").modalForm({
+            formURL: "{% url 'meteorvendor:OwnerProductCreateModal' %}",
+            modalID: "#modalMakeNFT"
+        });
+        $(".read-ownerproduct").each(function () {
+            $(this).modalForm({formURL: $(this).data("form-url")});
+        });
+
+    });
     </script>
-
 </body>
 </html>

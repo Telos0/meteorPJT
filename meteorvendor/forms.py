@@ -10,3 +10,8 @@ class OwnerProductModelForm(BSModalModelForm):
     class Meta:
         model = OwnerProduct
         fields = ['ownerid', 'productid', 'issuedyn']
+
+class OwnerProductModelUpdateForm(BSModalModelForm):
+    class Meta:
+        model = OwnerProduct
+        fields = ['ownerproductchainaccount']

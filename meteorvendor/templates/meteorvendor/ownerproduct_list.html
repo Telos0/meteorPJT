@@ -73,17 +73,22 @@
                             <h2 class="card-title">{{ p.productid.productnickname }}</h2>
                             <h7 class="card-body text-muted">NFT : {{ p.ownerproductchainaccount }}</h7>
 
+                            <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content"></div>
+                                </div>
+                            </div>
+
+                              <button type="button" class="update-ownerproduct bs-modal btn btn-sm btn-primary" data-form-url="{% url 'meteorvendor:OwnerProductUpdateModal' p.pk %}">
+                                <span class="fa fa-pencil">Send NFT</span>
+                              </button>
                         </div>
                         <div class="card-footer text-muted">
                             Posted {{ p.upddttm }} by
                             <a href="#">{{ p.productid.vendorid.vendorname | upper }}</a>
 
 
-                            <div class="modal fade" tabindex="-1" role="dialog" id="modal">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content"></div>
-                                </div>
-                            </div>
+
                             <button type="button" class="read-ownerproduct bs-modal btn btn-sm btn-primary" data-form-url="{% url 'meteorvendor:OwnerProductReadModal' p.pk %}">
                                 <span class="fa fa-eye">NFT info</span>
                             </button>
