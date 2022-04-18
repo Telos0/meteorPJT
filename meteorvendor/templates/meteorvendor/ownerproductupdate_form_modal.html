@@ -12,11 +12,15 @@
 
   <div class="modal-body">
       {{ form | crispy }}
+
+      <label for="toownerchainaccount">New Owner Account</label>
+
+      <input type="text" id="toownerchainaccount" name="toownerchainaccount" required size="30">
   </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-<!--    <button type="submit" class="btn btn-primary">Update</button>-->
+    <button type="submit" class="btn btn-primary">Update</button>
   </div>
 
 </form>

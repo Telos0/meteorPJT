@@ -310,20 +310,23 @@ class OwnerProductUpdateModal(LoginRequiredMixin, BSModalUpdateView):
 
     def form_valid(self, form):
         if not self.request.is_ajax():
-            toownerchainaccount = self.request.POST.get('ownerproductchainaccount')
+            ownerproductchainaccount = self.request.POST.get('ownerproductchainaccount')
+            toownerchainaccount = self.request.POST['toownerchainaccount']
+            print(toownerchainaccount)
             try:
-                toownerid = Owner.objects.get(ownerproductchainaccount=toownerchainaccount)
+                toownerid = Owner.objects.get(ownerchainaccount=toownerchainaccount)
             except Owner.DoesNotExist:
                 #redirect로 나중에 변경
                 raise Http404
-            print(toownerchainaccount)
 
-            # web3.eth.defaultAccount = defaultaccount  # 'web3.eth.accounts[0]'
-
+            web3.eth.defaultAccount = defaultaccount  # 'web3.eth.accounts[0]'
+            abi = json.loads(abi_product_contract)
+            contract = web3.eth.contract(address=ownerproductchainaccount, abi=abi)
+            tx_hash = contract.functions.changeOwner(toownerchainaccount).transact()
+            tx_receipt = web3.eth.waitForTransactionReceipt(tx_hash)
 
             temp_form = form.save(commit=False)
             temp_form.ownerid = toownerid
-            temp_form.ownerproductchainaccount = toownerchainaccount
             temp_form.save()
 
         return HttpResponseRedirect(self.success_url)
