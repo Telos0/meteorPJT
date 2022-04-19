@@ -5,6 +5,7 @@ from .models import Vendor, Product, Owner, OwnerProduct, OwnerProductHistory
 
 from django.urls import reverse_lazy
 from django.http import Http404
+from django.contrib import messages
 from .forms import ProductModelForm, OwnerProductModelForm, OwnerProductModelUpdateForm
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalReadView, BSModalUpdateView
 
@@ -311,13 +312,13 @@ class OwnerProductUpdateModal(LoginRequiredMixin, BSModalUpdateView):
     def form_valid(self, form):
         if not self.request.is_ajax():
             ownerproductchainaccount = self.request.POST.get('ownerproductchainaccount')
-            toownerchainaccount = self.request.POST['toownerchainaccount']
+            toownerchainaccount = self.request.POST.get('toownerchainaccount')
             print(toownerchainaccount)
             try:
                 toownerid = Owner.objects.get(ownerchainaccount=toownerchainaccount)
             except Owner.DoesNotExist:
                 #redirect로 나중에 변경
-                raise Http404
+                return HttpResponseRedirect('Error')
 
             web3.eth.defaultAccount = defaultaccount  # 'web3.eth.accounts[0]'
             abi = json.loads(abi_product_contract)

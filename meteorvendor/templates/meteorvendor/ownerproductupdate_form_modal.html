@@ -11,11 +11,15 @@
   </div>
 
   <div class="modal-body">
-      {{ form | crispy }}
 
-      <label for="toownerchainaccount">New Owner Account</label>
+      {% for field in form %}
+          <div class="form-group{% if field.errors %} invalid{% endif %}">
+            {{ field | as_crispy_field }}
+          </div>
+      {% endfor %}
 
-      <input type="text" id="toownerchainaccount" name="toownerchainaccount" required size="30">
+<!--      {{ form | crispy }}-->
+
   </div>
 
   <div class="modal-footer">
