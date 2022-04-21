@@ -411,6 +411,7 @@ class OwnerProductReadModal(LoginRequiredMixin, BSModalReadView):
         address = web3.toChecksumAddress(address)
         contract = web3.eth.contract(address=address, abi=abi)
         productinfo = contract.functions.getProductInfo().call()
+        ownerchangelist = contract.functions.getAddressList().call()
 
         owner = productinfo[0]
         ownername = Owner.objects.get(ownerchainaccount=owner).ownername
@@ -425,6 +426,7 @@ class OwnerProductReadModal(LoginRequiredMixin, BSModalReadView):
         context['product_id'] = product_id
         context['vendorname'] = vendorname
         context['product_description'] = product_description
+        context['ownerchangelist'] = ownerchangelist
 
         return context
 
