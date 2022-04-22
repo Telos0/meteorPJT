@@ -282,12 +282,14 @@ class OwnerProductCreateModal(LoginRequiredMixin, BSModalCreateView):
             ownername = Owner.objects.get(ownerid=ownerid).ownername
             productid = Product.objects.get(id=self.request.POST.get('productid')).productid
             productname = Product.objects.get(productid=productid).productnickname
+            vendorname = Product.objects.get(productid=productid).vendorid.vendorname
+            print(vendorname)
 
             web3.eth.defaultAccount = defaultaccount  # 'web3.eth.accounts[0]'
             abi = json.loads(abi_makeProduct_contract)
             address = web3.toChecksumAddress(makeproductaddress)
             contract = web3.eth.contract(address=address, abi=abi)
-            tx_hash = contract.functions.makeProduct(productname, productid, ownername, "11").transact()
+            tx_hash = contract.functions.makeProduct(productname, productid, vendorname, "11").transact()
             tx_receipt = web3.eth.waitForTransactionReceipt(tx_hash)
 
             logs = contract.events.Transfer().processReceipt(tx_receipt)
