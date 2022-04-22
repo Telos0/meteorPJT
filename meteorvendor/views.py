@@ -370,6 +370,12 @@ class ProductCreateModal(LoginRequiredMixin, BSModalCreateView):
     success_message = 'Success: Product was created.'
     success_url = reverse_lazy('meteorvendor:ProductList')
 
+    #form get시 쿼리셋 추가
+    def get_form(self, *args, **kwargs):
+        form = super(ProductCreateModal, self).get_form(*args, **kwargs)
+        form.fields['vendorid'].queryset = Vendor.objects.filter(vendorid=Owner.objects.get(user=self.request.user).ownerid)
+        return form
+
     def form_valid(self, form):
         if not self.request.is_ajax():
             image = self.request.FILES['chooseFile']
