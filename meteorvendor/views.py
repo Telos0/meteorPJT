@@ -204,7 +204,25 @@ abi_makeProduct_contract = """\
 class ProductList(LoginRequiredMixin, ListView):
     model = Product
 
+    def get_context_data(self, **kwargs):
+        context = super(ProductList, self).get_context_data()
 
+        if self.request.user.is_superuser:
+            return context
+
+        try:
+            owner = Owner.objects.get(user=self.request.user)
+        except Owner.DoesNotExist:
+            owner = None
+
+        try:
+            vendor = Vendor.objects.get(vendorid=owner.ownerid)
+        except Vendor.DoesNotExist:
+            vendor = None
+
+        context['product_list'] = Product.objects.filter(vendorid=vendor)
+
+        return context
 class OwnerProductList(LoginRequiredMixin, ListView):
     model = OwnerProduct
 
